@@ -1,0 +1,41 @@
+{
+  "name": "nextjs-with-typescript",
+  "version": "5.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run copy:models && next dev",
+    "build": "npm run copy:models && next build",
+    "start": "npm run copy:models && next start",
+    "lint": "npm run copy:models && next lint",
+    "copy:models": "rm -rf ./src/common && cp -r ../common ./src/common"
+  },
+  "dependencies": {
+    "@emotion/cache": "11.6.0",
+    "@emotion/react": "11.7.0",
+    "@emotion/server": "11.4.0",
+    "@emotion/styled": "11.6.0",
+    "@mui/icons-material": "5.2.1",
+    "@mui/lab": "5.0.0-alpha.61",
+    "@mui/material": "5.2.3",
+    "@reduxjs/toolkit": "1.7.0",
+    "abort-controller": "3.0.0",
+    "classnames": "2.3.1",
+    "date-fns": "2.27.0",
+    "next": "12.0.7",
+    "next-redux-wrapper": "7.0.5",
+    "notistack": "2.0.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-redux": "7.2.6",
+    "react-topbar-progress-indicator": "4.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "16.3.1",
+    "@types/classnames": "2.3.1",
+    "@types/node-fetch": "3.0.3",
+    "@types/react": "17.0.37",
+    "eslint": "8.4.1",
+    "eslint-config-next": "12.0.7",
+    "typescript": "4.5.3"
+  }
+}

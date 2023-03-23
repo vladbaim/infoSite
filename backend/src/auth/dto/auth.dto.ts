@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class AuthDTO implements Readonly<AuthDTO> {
   constructor(username: string, password: string) {

@@ -13,5 +13,13 @@
 			"path": "./"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.exclude": {
+			"node_modules/": true,
+			".next/": true,
+			"admin/": true,
+			"backend/": true,
+			"front/": true,
+		}
+	},
 }

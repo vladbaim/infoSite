@@ -1,15 +1,20 @@
 import { PartialType } from '@nestjs/swagger';
-import { isValuePresent } from '../../../../common/validation/isValuePresent';
+import { UpdateBaseDTO } from '../../shared/base/update-base.dto';
+import { mergeUpdater } from '../../shared/pipes/merdgeUpdater';
 import { Post } from '../entities/post.entity';
-import { CreatePostDto } from './create-post.dto';
+import { CreatePostDTO } from './create-post.dto';
 
-export class UpdatePostDto extends PartialType(CreatePostDto) implements Readonly<UpdatePostDto> {
-  public mergeWithEntity(post: Post) {
-    Object.assign(post, {
-      ...(isValuePresent(this.title) && { title: this.title }),
-      ...(isValuePresent(this.text) && { text: this.text }),
-      ...(isValuePresent(this.previewId) && { previewId: this.previewId })
-    });
+export class UpdatePostDTO extends PartialType(CreatePostDTO) implements UpdateBaseDTO<Post> {
+  constructor(title?: string, text?: string, previewId?: number, categoryId?: number) {
+    super();
+    this.title = title;
+    this.text = text;
+    this.previewId = previewId;
+    this.categoryId = categoryId;
+  }
+
+  mergeWithEntity(post: Post) {
+    mergeUpdater<Post>(post, this);
     return post;
   }
 }

@@ -9,8 +9,9 @@ export const main = async () => {
       host: dbConfig.host,
       port: dbConfig.port,
       username: dbConfig.username,
-      password: dbConfig.username
+      password: dbConfig.username,
     };
+    console.log('Create connection', connectionOptions);
     const connection = await createConnection(connectionOptions);
     console.log('Connection created');
     await connection.query(`DROP DATABASE IF EXISTS ${dbConfig.database}`);

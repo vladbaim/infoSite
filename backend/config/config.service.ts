@@ -60,7 +60,8 @@ class ConfigService {
           password: this.getValue('REDIS_PASSWORD'),
           port: this.getValue('REDIS_PORT')
         }
-      }
+      },
+      synchronize: !this.isProduction()
     };
   }
 

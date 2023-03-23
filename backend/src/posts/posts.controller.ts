@@ -1,42 +1,25 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
-import { PostDTO } from './dto/post.dto';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CreatePostDTO } from './dto/create-post.dto';
+import { UpdatePostDTO } from './dto/update-post.dto';
+import { ControllerWithTag } from '../shared/decorators/controllerWithTag';
+import { ApiTagEnum } from '../../../common/api.enum';
+import { Crud } from '@nestjsx/crud';
+import { Post } from './entities/post.entity';
+import { crudDefaultRoutesConfig } from '../shared/constants/crudRoutes';
 
-@ApiTags('post')
-@Controller('posts')
+@Crud({
+  model: { type: Post },
+  dto: { create: CreatePostDTO, update: UpdatePostDTO, replace: CreatePostDTO },
+  routes: { ...crudDefaultRoutesConfig },
+  query: {
+    join: {
+      preview: {
+        allow: []
+      }
+    }
+  }
+})
+@ControllerWithTag(ApiTagEnum.Posts)
 export class PostsController {
-  constructor(private readonly postsService: PostsService) {}
-
-  @Post()
-  @ApiResponse({ status: 201, type: PostDTO })
-  create(@Body() createPostDto: CreatePostDto): Promise<PostDTO> {
-    return this.postsService.create(createPostDto);
-  }
-
-  @Get()
-  @ApiResponse({ status: 201, type: PostDTO, isArray: true })
-  findAll() {
-    return this.postsService.findAll();
-  }
-
-  @Get(':id')
-  @ApiResponse({ status: 201, type: PostDTO })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.postsService.findOne(id);
-  }
-
-  @Patch(':id')
-  @ApiResponse({ status: 201, type: PostDTO })
-  update(@Param('id', ParseIntPipe) id: number, @Body() updatePostDto: UpdatePostDto) {
-    return this.postsService.update(id, updatePostDto);
-  }
-
-  @Delete(':id')
-  @ApiResponse({ status: 201 })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.postsService.remove(id);
-  }
+  constructor(private readonly service: PostsService) {}
 }

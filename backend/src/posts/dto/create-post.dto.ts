@@ -1,24 +1,12 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { PickType } from '@nestjs/swagger';
 import { Post } from '../entities/post.entity';
 
-export class CreatePostDto implements Readonly<CreatePostDto> {
-  constructor(title: string, text: string, previewId?: number) {
+export class CreatePostDTO extends PickType(Post, ['title', 'text', 'previewId', 'categoryId']) {
+  constructor(title: string, text: string, previewId?: number, categoryId?: number) {
+    super();
     this.title = title;
     this.text = text;
     this.previewId = previewId;
+    this.categoryId = categoryId;
   }
-
-  @ApiProperty({ required: true })
-  @IsString()
-  title: string;
-
-  @ApiProperty({ required: true })
-  @IsString()
-  text: string;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @IsNumber()
-  previewId?: number;
 }

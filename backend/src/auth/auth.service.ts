@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compareSync } from 'bcrypt';
+import { JwtToken } from '../shared/types/jwtToken';
 import { UserPureDTO } from '../users/dto/user-pure.dto';
 import { UsersService } from '../users/users.service';
+import { AccessTokenDTO } from './dto/access-token-dto';
 import { AuthDTO } from './dto/auth.dto';
 
 @Injectable()
@@ -17,10 +19,8 @@ export class AuthService {
     }
   }
 
-  login(user: UserPureDTO) {
-    const payload = { username: user.username, id: user.id };
-    return {
-      access_token: this.jwtService.sign(payload)
-    };
+  login(user: UserPureDTO): AccessTokenDTO {
+    const payload: JwtToken = { username: user.username, id: user.id };
+    return new AccessTokenDTO(this.jwtService.sign(payload));
   }
 }
